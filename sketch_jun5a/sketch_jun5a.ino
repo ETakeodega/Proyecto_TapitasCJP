@@ -1,11 +1,23 @@
+int sensor_pin = 4;
+int sensor_prox = 0;
+int contador_tapas = 0;
+
 void setup() {
   // put your setup code here, to run once:
-pinMode (4,input);
+pinMode (sensor_pin,INPUT);
 Serial.begin (9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-digitalRead (4);
-Serial.print (digitalRead (4));
+sensor_prox = digitalRead (sensor_pin);
+//Serial.println (digitalRead (sensor_pin));
+
+if (sensor_prox){
+  Serial.println('R');
+  contador_tapas ++;
+Serial.println(contador_tapas);
+}
+
+
 }
