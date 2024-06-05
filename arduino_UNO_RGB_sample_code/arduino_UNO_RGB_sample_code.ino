@@ -1,14 +1,14 @@
-//This code was written to be easy to understand.
-									 
-//Modify this code as you see fit.
-//This code will output data to the Arduino serial monitor.
-//Type commands into the Arduino serial monitor to control the EZO-RGB.
-//This code was written in the Arduino 1.8.9 IDE
-//An Arduino UNO was used to test this code.
-//This code was last tested 6/2019
+#include <Servo.h>
 
+Servo myservo1;  
+Servo myservo2;
 
-#include <SoftwareSerial.h>                           //we have to include the SoftwareSerial library, or else we can't use it
+int led_R = 8;
+int led_G = 9;
+int led_B = 10;
+
+#include <SoftwareSerial.h>    
+                                                     
 #define rx 2                                          //define what pin rx is going to be
 #define tx 3                                          //define what pin tx is going to be
 
@@ -23,17 +23,25 @@ boolean sensor_string_complete = false;               //have we received all the
 
 
 
-void setup() {                                        //set up the hardware
-  Serial.begin(9600);                                 //set baud rate for the hardware serial port_0 to 9600
-  myserial.begin(9600);                               //set baud rate for the software serial port to 9600
-  inputstring.reserve(10);                            //set aside some bytes for receiving data from the PC
-  sensorstring.reserve(30);                           //set aside some bytes for receiving data from Atlas Scientific product
+void setup() {    
+  
+  myservo1.attach(5);
+  myservo2.attach(6);  
+
+  pinMode(led_R, OUTPUT);
+  pinMode(led_G, OUTPUT);
+  pinMode(led_B, OUTPUT);
+
+  Serial.begin(9600);                                 
+  myserial.begin(9600);                              
+  inputstring.reserve(10);                            
+  sensorstring.reserve(30);                           
 }
 
 
-void serialEvent() {                                  //if the hardware serial port_0 receives a char
-  inputstring = Serial.readStringUntil(13);           //read the string until we see a <CR>
-  input_string_complete = true;                       //set the flag used to tell if we have received a completed string from the PC
+void serialEvent() {                                  
+  inputstring = Serial.readStringUntil(13);          
+  input_string_complete = true;                       
 }
 
 
@@ -93,29 +101,36 @@ void print_RGB_data(void) {                           //this function will pars 
   Serial.println(grn);                                 //this is the green value
 
   Serial.print("BLUE:");                               //we now print each value we parsed separately
-  Serial.println(blu);                                 //this is the blue value
-   
-// int_red= atoi(red);                                 //uncomment this line to convert the char to an int
-// int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
-// int_blu= atoi(blu);                                 //uncomment this line to convert the char to an int
+  Serial.println(blu);   
+                                //this is the blue value
+  int_red= atoi(red);                                 //uncomment this line to convert the char to an int
+ int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
+ int_blu= atoi(blu);
+  if (int_red > 130) {
+    digitalWrite(led_R, HIGH);
+    digitalWrite(led_G, LOW);
+    digitalWrite(led_B, LOW);
+    myservo1.write(90);  
+    delay(10);
+    myservo1.write(0);              
 }
- 
+
+  if (int_grn > 130) {
+    digitalWrite(led_R, LOW);
+    digitalWrite(led_G, HIGH);
+    digitalWrite(led_B, LOW);
+    myservo2.write(90);
+    delay(10);
+    myservo2.write(0);
+}
+
+  if (int_blu > 130) {
+    digitalWrite(led_R, LOW);
+    digitalWrite(led_G, LOW);
+    digitalWrite(led_B, HIGH);
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                  //uncomment this line to convert the char to an int
+}
 

@@ -3,9 +3,9 @@
 Servo myservo1;  
 Servo myservo2;
 
-int led_R = 11;
-int led_G = 12;
-int led_B = 13;
+int led_R = 8;
+int led_G = 9;
+int led_B = 10;
 
 #include <SoftwareSerial.h>    
                                                      
@@ -20,7 +20,9 @@ String sensorstring = "";                             //a string to hold the dat
 boolean input_string_complete = false;                //have we received all the data from the PC
 boolean sensor_string_complete = false;               //have we received all the data from the Atlas Scientific product
 
-
+int int_red= 0;                                 //uncomment this line to convert the char to an int
+int int_grn= 0   ;                              //uncomment this line to convert the char to an int
+int int_blu= 0; 
 
 
 void setup() {    
@@ -103,32 +105,35 @@ void print_RGB_data(void) {                           //this function will pars 
   Serial.print("BLUE:");                               //we now print each value we parsed separately
   Serial.println(blu);                                 //this is the blue value
   
-  if (red > 100) {
+int_red= atoi(red);                                 //uncomment this line to convert the char to an int
+int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
+int_blu= atoi(blu); 
+
+  if (int_red > 140) {
     digitalWrite(led_R, HIGH);
     digitalWrite(led_G, LOW);
     digitalWrite(led_B, LOW);
     myservo1.write(90);  
     delay(10);
-    myservo1.write(0);              
-}
-
-  if (grn > 100) {
+    myservo1.write(0);
+    Serial.print("red:"); 
+  }
+  if (int_grn > 140) {
     digitalWrite(led_R, LOW);
     digitalWrite(led_G, HIGH);
     digitalWrite(led_B, LOW);
     myservo2.write(90);
     delay(10);
     myservo2.write(0);
+    Serial.print("grn:"); 
 }
 
-  if (blu > 100) {
+  if (int_blu > 140) {
     digitalWrite(led_R, LOW);
     digitalWrite(led_G, LOW);
     digitalWrite(led_B, HIGH);
+    Serial.print("blu:"); 
 }
 
-
-// int_red= atoi(red);                                 //uncomment this line to convert the char to an int
-// int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
-// int_blu= atoi(blu);                                 //uncomment this line to convert the char to an int
+                                //uncomment this line to convert the char to an int
 }
