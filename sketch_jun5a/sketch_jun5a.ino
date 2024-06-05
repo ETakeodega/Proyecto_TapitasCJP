@@ -3,7 +3,7 @@ int sensor_prox = 0;
 int contador_tapas = 0;
 int contador_r = 0;
 int contador_g = 0;
-int contador_r = 0;
+int contador_b = 0;
 void setup() {
   // put your setup code here, to run once:
 pinMode (sensor_pin,INPUT);

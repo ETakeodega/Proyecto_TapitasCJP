@@ -6,7 +6,12 @@ Servo myservo2;
 int led_R = 8;
 int led_G = 9;
 int led_B = 10;
-
+int sensor_pin = 4;
+int sensor_prox = 0;
+int contador_tapas = 0;
+int contador_r = 0;
+int contador_g = 0;
+int contador_b = 0;
 #include <SoftwareSerial.h>    
                                                      
 #define rx 2                                          //define what pin rx is going to be
@@ -26,7 +31,7 @@ int int_blu= 0;
 
 
 void setup() {    
-  
+  pinMode (sensor_pin,INPUT);
   myservo1.attach(5);
   myservo2.attach(6);  
 
@@ -49,6 +54,18 @@ void serialEvent() {
 
 void loop() {                                         //here we go...
 
+  sensor_prox = digitalRead (sensor_pin);
+  //Serial.println (digitalRead (sensor_pin));
+
+  if (sensor_prox){
+    if (sensor_prox != digitalRead (sensor_pin)){
+          myserial.println('\R'); 
+          sensor_string_complete = true ;                           //add a <CR> to the end of the string
+
+      contador_tapas ++;
+  Serial.println(contador_tapas);
+
+    }}
   if (input_string_complete == true) {                //if a string from the PC has been received in its entirety
     myserial.print(inputstring);                      //send that string to the Atlas Scientific product
     myserial.print('\r');                             //add a <CR> to the end of the string
