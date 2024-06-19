@@ -1,7 +1,9 @@
 #include <Servo.h>
 
+
 Servo myservo1;  
 Servo myservo2;
+
 
 int led_R = 8;
 int led_G = 9;
@@ -26,11 +28,21 @@ boolean input_string_complete = false;                //have we received all the
 boolean sensor_string_complete = false;               //have we received all the data from the Atlas Scientific product
 
 int int_red= 0;                                 //uncomment this line to convert the char to an int
-int int_grn= 0   ;                              //uncomment this line to convert the char to an int
+int int_grn= 0;                              //uncomment this line to convert the char to an int
 int int_blu= 0; 
 
+#include <LiquidCrystal.h>
 
-void setup() {    
+const int rs = 13, en = 12, d4 = 19, d5 = 18, d6 = 17, d7 = 16;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {  
+
+  lcd.begin (16,2);
+  lcd.setCursor(0, 0);
+  lcd.print("R:  G:  B:  T:");
+  
+    
   pinMode (sensor_pin,INPUT);
   myservo1.attach(5);
   myservo2.attach(6);  
@@ -126,31 +138,46 @@ int_red= atoi(red);                                 //uncomment this line to con
 int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
 int_blu= atoi(blu); 
 
-  if (int_red > 140) {
+  if (int_red > 175) {
     digitalWrite(led_R, HIGH);
     digitalWrite(led_G, LOW);
     digitalWrite(led_B, LOW);
     myservo1.write(90);  
     delay(10);
     myservo1.write(0);
-    Serial.print("red:"); 
+    Serial.print("red:");
+    contador_r ++; 
   }
-  if (int_grn > 140) {
+  if (int_grn > 175) {
     digitalWrite(led_R, LOW);
     digitalWrite(led_G, HIGH);
     digitalWrite(led_B, LOW);
     myservo2.write(90);
     delay(10);
     myservo2.write(0);
-    Serial.print("grn:"); 
+    Serial.print("grn:");
+    contador_g ++; 
 }
 
-  if (int_blu > 140) {
+  if (int_blu > 175) {
     digitalWrite(led_R, LOW);
     digitalWrite(led_G, LOW);
     digitalWrite(led_B, HIGH);
     Serial.print("blu:"); 
+    contador_b ++;    
 }
+
+  lcd.setCursor(0, 1);
+  lcd.print(contador_r);
+
+   lcd.setCursor(4, 1);
+  lcd.print(contador_g);
+
+   lcd.setCursor(8, 1);
+  lcd.print(contador_b);
+
+   lcd.setCursor(12, 1);
+  lcd.print(contador_tapas);
 
                                 //uncomment this line to convert the char to an int
 }
