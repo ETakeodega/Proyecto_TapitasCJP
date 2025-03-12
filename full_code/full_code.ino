@@ -71,7 +71,7 @@ void loop() {                                         //here we go...
 
   if (sensor_prox){
     if (sensor_prox != digitalRead (sensor_pin)){
-          myserial.println('\R'); 
+           myserial.print('\r');                             //add a <CR> to the end of the string
           sensor_string_complete = true ;                           //add a <CR> to the end of the string
 
       contador_tapas ++;
