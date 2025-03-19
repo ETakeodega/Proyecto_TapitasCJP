@@ -1,3 +1,4 @@
+
 #include <Servo.h>
 #include <SoftwareSerial.h>                           //we have to include the SoftwareSerial library, or else we can't use it
 #define rx 2                                          //define what pin rx is going to be
@@ -25,7 +26,10 @@ int c=0;
 void setup() {      
   
   myservo.attach(9); 
-  myservo.attach(10); // attaches the servo on pin 9 to the servo object
+  myservo2.attach(10); // attaches the servo on pin 9 to the servo object
+
+  myservo.write(0);
+  myservo2.write(0);
 
   //                                   //set up the hardware
   Serial.begin(9600);                                 //set baud rate for the hardware serial port_0 to 9600
@@ -120,8 +124,15 @@ void print_RGB_data(void) {                           //this function will pars 
 int_red= atoi(red);                                 //uncomment this line to convert the char to an int
 int_grn= atoi(grn);                                 //uncomment this line to convert the char to an int
 int_blu= atoi(blu);                                 //uncomment this line to convert the char to an int
+
+
+if (int_red>int_grn and int_red>int_blu);
+  myservo.write(90);
+  
 }
 
+
+  
 
 
 void sensor (){
