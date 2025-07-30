@@ -16,6 +16,9 @@ String sensorstring = "";
 bool objetoDetectado = false;
 unsigned long tempoUltimaDeteccao = 0;
 const unsigned long intervaloDeteccao = 1000; // 1 segundo
+int int_red = 0;
+int int_grn = 0;
+int int_blu = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -87,9 +90,9 @@ void procesarRGB(String datos) {
   char *blu = strtok(NULL, ",");
 
   if (red && grn && blu) {
-    int int_red = atoi(red);
-    int int_grn = atoi(grn);
-    int int_blu = atoi(blu);
+     int_red = atoi(red);
+     int_grn = atoi(grn);
+     int_blu = atoi(blu);
 
     // Opcional: ignora lectura nula (0,0,0)
     if (int_red == 0 && int_grn == 0 && int_blu == 0) return;
@@ -103,19 +106,19 @@ void procesarRGB(String datos) {
     Serial.println(int_blu);
   }
 
-if (blu > red and blu > grn) {
+if (int_blu > int_red and int_blu > int_grn) {
   myservo.write(90);
   delay(3000);
   myservo.write(0);
 }
 
-else if (red > blu and red > grn) {
+else if (int_red > int_blu and int_red > int_grn) {
   myservo2.write(90);
   delay(3000);
   myservo2.write(0);
 }
 
-else if (grn > blu and grn > red){
+else if (int_grn > int_blu and int_grn > int_red){
   myservo.write(0);
   myservo2.write(0);
 }
