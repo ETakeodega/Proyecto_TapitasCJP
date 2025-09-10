@@ -34,8 +34,8 @@ void setup() {
 
   myservo.attach(9);
   myservo2.attach(10);
-  myservo.write(0);
-  myservo2.write(0);
+  myservo.write(40);
+  myservo2.write(25);
 
   // Lee estado inicial del sensor
   prevState = digitalRead(pinSensor);
@@ -127,10 +127,10 @@ void procesarRGB(String datos) {
 
   // Acciones por color dominante (como tenías)
   if (int_blu > int_red && int_blu > int_grn) {
-    myservo.write(90); delay(3000); myservo.write(0);
+    myservo.write(95); delay(2000); myservo.write(40);
   } else if (int_red > int_blu && int_red > int_grn) {
-    myservo2.write(90); delay(3000); myservo2.write(0);
+    myservo2.write(90); delay(2000); myservo2.write(25);
   } else if (int_grn > int_blu && int_grn > int_red) {
-    myservo.write(0); myservo2.write(0);
+    myservo.write(40); myservo2.write(25);
   }
 }
